@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.alfresco.org/model/dictionary/1.0" name="mcp:mcpModel">
+    <author>Administrator</author>
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl"/>
+        <import uri="employee.model" prefix="emp"/> 
+    </imports>
+    <namespaces>
+        <namespace uri="mcp.model" prefix="mcp"/>
+    </namespaces>
+
+    <types>
+        <type name="mcp:device">
+            <title>Мобільний пристрій (МКП)</title>
+            <parent>dl:dataListItem</parent>
+            <properties>
+                <property name="mcp:deviceType">
+                    <title>Type (Тип)</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <constraints>
+                        <constraint type="LIST">
+                            <parameter name="allowedValues">
+                                <list>
+                                    <value>Телефон</value>
+                                    <value>Планшет</value>
+                                </list>
+                            </parameter>
+                        </constraint>
+                    </constraints>
+                </property>
+                <property name="mcp:manufacturer">
+                    <title>Manufacturer (Виробник)</title>
+                    <type>d:text</type>
+                </property>
+                <property name="mcp:modelName">
+                    <title>Model (Модель)</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="mcp:memory">
+                    <title>Memory (Пам'ять)</title>
+                    <type>d:text</type>
+                </property>
+                <property name="mcp:wifiMac">
+                    <title>Wi-Fi MAC address</title>
+                    <type>d:text</type>
+                </property>
+                <property name="mcp:imei">
+                    <title>Device IMEI</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple> </property>
+                <property name="mcp:ownerName">
+                    <title>Власник (ПІБ)</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>true</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+            </properties>
+
+            <associations>
+                <association name="mcp:owner">
+                    <title>Власник (Співробітник)</title>
+                    <source>
+                        <mandatory>false</mandatory>
+                        <many>true</many>
+                    </source>
+                    <target>
+                        <class>emp:militaryemployee</class>
+                        <mandatory>false</mandatory>
+                        <many>false</many>
+                    </target>
+                </association>
+            </associations>
+        </type>
+    </types>
+</model>

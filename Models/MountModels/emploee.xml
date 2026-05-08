@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.alfresco.org/model/dictionary/1.0" name="emp:employee">
+    <author>Administrator</author>
+    <imports>
+        <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl"/>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+    </imports>
+    <namespaces>
+        <namespace uri="employee.model" prefix="emp"/>
+    </namespaces>
+    <data-types/>
+    <constraints/>
+    <types>
+        <type name="emp:militaryemployee">
+            <title>Користувачі</title>
+            <parent>dl:dataListItem</parent>
+            <properties>
+                <property name="emp:location">
+                    <title>Де знаходиться</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:rank">
+                    <title>Звання</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>FALSE</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                    <constraints>
+                        <constraint name="emp:LIST_05b71cf4-5cf9-45a2-8314-f7e8a2e4fbc2" type="LIST">
+                            <parameter name="allowedValues">
+                                <list>
+                                    <value>працівник ЗСУ</value>
+                                    <value>матрос</value>
+                                    <value>рекрут</value>
+                                    <value>рядовий</value>
+                                    <value>солдат</value>
+                                    <value>старший солдат</value>
+                                    <value>молодший сержант</value>
+                                    <value>сержант</value>
+                                    <value>старший сержант</value>
+                                    <value>головний сержант</value>
+                                    <value>майстер-сержант</value>
+                                    <value>старший майстер-сержант</value>
+                                    <value>штаб-сержант</value>
+                                    <value>єфрейтор</value>
+                                    <value>старшина</value>
+                                    <value>прапорщик</value>
+                                    <value>молодший лейтенант</value>
+                                    <value>молодший лейтенант м/с</value>
+                                    <value>лейтенант</value>
+                                    <value>лейтенант юстиції</value>
+                                    <value>лейтенант м/с</value>
+                                    <value>старший лейтенант</value>
+                                    <value>старший лейтенант юстиції</value>
+                                    <value>старший лейтенант м/с</value>
+                                    <value>капітан</value>
+                                    <value>капітан м/с</value>
+                                    <value>майор</value>
+                                    <value>майор юстиції</value>
+                                    <value>майор м/с</value>
+                                    <value>підполковник</value>
+                                    <value>полковник</value>
+                                </list>
+                            </parameter>
+                            <parameter name="caseSensitive">
+                                <value>true</value>
+                            </parameter>
+                            <parameter name="sorted">
+                                <value>false</value>
+                            </parameter>
+                        </constraint>
+                    </constraints>
+                </property>
+                <property name="emp:orderNumber">
+                    <title>Наказ</title>
+                    <type>d:int</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                    </index>
+                </property>
+                <property name="emp:fullName">
+                    <title>Повне ім'я</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:department">
+                    <title>Підрозділ</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:emploeeid">
+                    <title>id</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:position">
+                    <title>Посада</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:departureDate">
+                    <title>Дата убуття</title>
+                    <type>d:date</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                    </index>
+                </property>
+                <property name="emp:reason">
+                    <title>Причина</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+                <property name="emp:taxId">
+                    <title>ІНН</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>TRUE</tokenised>
+                        <facetable>false</facetable>
+                    </index>
+                </property>
+ 
+            </properties>
+            <associations/>
+            <overrides/>
+            <mandatory-aspects/>
+        </type>
+    </types>
+    <aspects/>
+</model>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <bean id="copyOwnerNameBehaviour" class="org.alfresco.repo.policy.JavaScriptBehaviour">
+      <property name="scriptPath" value="alfresco/extension/scripts/copy-owner-name.js" />
+      <property name="policy" value="onCreateNode" />
+      <property name="policy" value="onUpdateNode" />
+      <property name="type" value="mcp:device" />
+   </bean>
+
+</beans>
