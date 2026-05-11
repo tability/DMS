@@ -4,6 +4,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.alfresco.priority=1"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
       - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex=^https?://[^/]+/([^/.]+)$$"
@@ -59,6 +60,20 @@ services:
       - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
+
+
+  cmdbuild_app:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cmdbuild.rule=PathPrefix(`/cmdbuild`)"
+      - "traefik.http.routers.cmdbuild.entrypoints=web"
+      - "traefik.http.routers.cmdbuild.priority=100"
+      - "traefik.http.services.cmdbuild.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.cmdbuild-forceslash.redirectregex.regex=^(.*/cmdbuild)$$"
+      - "traefik.http.middlewares.cmdbuild-forceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.routers.cmdbuild.middlewares=cmdbuild-forceslash@docker"
+
+
   proxy:
     image: traefik:3.6
     mem_limit: 128m
@@ -72,6 +87,7 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--ping.entrypoint=web"
       - "--ping=true"
+      - "--log.level=DEBUG"
     ports:
       - "8080:8080"
       - "8888:8888"
@@ -93,3 +109,5 @@ services:
       - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
       - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
       - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
+
+

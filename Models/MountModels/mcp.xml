@@ -33,19 +33,10 @@
                 <property name="mcp:manufacturer">
                     <title>Manufacturer (Виробник)</title>
                     <type>d:text</type>
-                    <index enabled="true">
-                        <tokenised>TRUE</tokenised>
-                        <facetable>false</facetable>
-                    </index>
                 </property>
                 <property name="mcp:modelName">
                     <title>Model (Модель)</title>
-                    <type>d:text</type>
-                    <mandatory>true</mandatory>
-                    <index enabled="true">
-                        <tokenised>TRUE</tokenised>
-                        <facetable>false</facetable>
-                    </index>                    
+                    <type>d:text</type>              
                 </property>
                 <property name="mcp:memory">
                     <title>Memory (Пам'ять)</title>
@@ -54,10 +45,6 @@
                 <property name="mcp:wifiMac">
                     <title>Wi-Fi MAC address</title>
                     <type>d:text</type>
-                    <index enabled="true">
-                        <tokenised>TRUE</tokenised>
-                        <facetable>false</facetable>
-                    </index>
                 </property>
                 <property name="mcp:imei">
                     <title>Device IMEI</title>
@@ -72,7 +59,7 @@
                     <title>Serial Number</title>
                     <type>d:text</type>
                     <index enabled="true">
-                        <tokenised>TRUE</tokenised>
+                        <tokenised>FALSE</tokenised>
                         <facetable>false</facetable>
                     </index>
                 </property>

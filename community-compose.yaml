@@ -107,11 +107,13 @@ services:
       timeout: 2s
       retries: 3
       start_period: 15s
-    volumes:
+#    volumes:
 #      - ./conf/share-config-custom.xml:/usr/local/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
-      - ./conf/controls/:/usr/local/tomcat/shared/classes/alfresco/web-extension/control
-      - ./conf/scripts/:/usr/local/tomcat/shared/classes/alfresco/extension/scripts/
-      - ./conf/context/context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/context.xml
+#      - ./conf/controls/:/usr/local/tomcat/shared/classes/alfresco/web-extension/control
+#      - ./conf/scripts/:/usr/local/tomcat/shared/classes/alfresco/extension/scripts/
+#      - ./conf/context/context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/context.xml
+#      - ./conf/context/context.xml:/usr/local/tomcat/shared/classes/alfresco/web-extension/context/context.xml
+#      - ./conf/context/forms-bootstrap-context.xml:/usr/local/tomcat/shared/classes/alfresco/web-extension/context/forms-bootstrap-context.xml
     depends_on:
       alfresco:
         condition: service_healthy
@@ -204,3 +206,64 @@ services:
     extends:
       file: commons/base.yaml
       service: proxy
+
+  cmdbuild_db:
+    image: postgis/postgis:17-3.5-alpine
+    container_name: cmdbuild_db
+    volumes:
+      - db-postgre:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Cahphi1ohkoob0
+      - TZ=Europe/Kyiv
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 80s
+
+  cmdbuild_app:
+    image: itmicus/cmdbuild:r2u-2.4-4.1.0
+    container_name: cmdbuild_app
+    links:
+      - cmdbuild_db
+    depends_on:
+      cmdbuild_db:
+        condition: service_healthy
+    ports:
+      - "8091:8080"
+      - "8444:8443"
+    restart: always
+    volumes:
+      - cmdbuild-data:/usr/local/tomcat
+      - ./ssl:/usr/local/tomcat/conf/ssl
+      - ./cmdbuild/server.xml:/usr/local/tomcat/conf/server.xml
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Cahphi1ohkoob0
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=cmdbuild_db
+      - POSTGRES_DB=cmdbuild_r2u2
+      - CMDBUILD_DUMP=empty.dump.xz
+      - JAVA_OPTS=-Xmx4000m -Xms3000m
+      - TZ=Europe/Kyiv
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-L", "http://localhost:8080/cmdbuild/ui"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    
+    extends:
+      file: commons/base.yaml
+      service: cmdbuild_app
+
+volumes:
+  db-postgre:
+  cmdbuild-data:
+  alfresco-db:

@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-          http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-   <bean id="copyOwnerNameBehaviour" class="org.alfresco.repo.policy.JavaScriptBehaviour">
-      <property name="scriptPath" value="alfresco/extension/scripts/copy-owner-name.js" />
-      <property name="policy" value="onCreateNode" />
-      <property name="policy" value="onUpdateNode" />
-      <property name="type" value="mcp:device" />
-   </bean>
-
+    <!-- Перевизначаємо datagrid для mcp:device -->
+    <bean id="mcp.device.datagrid" class="org.alfresco.web.config.forms.FormConfigElement">
+        <property name="forms">
+            <map>
+                <entry key="mcp:device">
+                    <bean class="org.alfresco.web.config.forms.Form">
+                        <property name="datagrid">
+                            <list>
+                                <bean class="org.alfresco.web.config.forms.Field">
+                                    <property name="id" value="mcp:modelName"/>
+                                    <property name="label" value="Модель"/>
+                                </bean>
+                                <bean class="org.alfresco.web.config.forms.Field">
+                                    <property name="id" value="mcp:wifiMac"/>
+                                    <property name="label" value="Wi-Fi MAC"/>
+                                </bean>
+                                <bean class="org.alfresco.web.config.forms.Field">
+                                    <property name="id" value="mcp:SerialNumber"/>
+                                    <property name="label" value="Серійний номер"/>
+                                </bean>
+                                <bean class="org.alfresco.web.config.forms.Field">
+                                    <property name="id" value="mcp:owner"/>
+                                    <property name="label" value="Власник"/>
+                                </bean>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
 </beans>
